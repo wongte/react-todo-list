@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Card, Row, Col, Button } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import { CheckOutlined, DeleteFilled } from '@ant-design/icons'
 
 export default class ListItem extends Component {
   constructor(props) {
@@ -26,26 +26,23 @@ export default class ListItem extends Component {
   render() {
     let item = this.props.item
     return (
-      <Card>
-        <Row>
-          <Col span={20}>
-            <div onClick={this.toggleStatus}>
-              {item.status ? (
-                <strike>{item.content}</strike>
-              ) : (
-                <span>{item.content}</span>
-              )}
-            </div>
-          </Col>
-          <Col span={4}>
-            <Button
-              type="primary"
-              shape="circle"
-              icon={<SearchOutlined />}
-              onClick={this.deleteItem}
-            />
-          </Col>
-        </Row>
+      <Card
+        actions={[
+          <CheckOutlined
+            onClick={this.toggleStatus}
+          />,
+          <DeleteFilled
+            onClick={this.deleteItem}
+          />,
+        ]}
+      >
+        <p>
+          {item.status ? (
+            <strike>{item.content}</strike>
+          ) : (
+            <span>{item.content}</span>
+          )}
+        </p>
       </Card>
     )
   }

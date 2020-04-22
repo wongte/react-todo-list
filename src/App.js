@@ -2,14 +2,17 @@ import React from 'react'
 import './App.css'
 import ToDoList from './components/ToDoList'
 import 'antd/dist/antd.css'
+import { Layout, PageHeader } from 'antd'
+
+const { Content } = Layout
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Todo List</h1>
-        <ToDoList />
-      </header>
+      <PageHeader className="site-page-header" title="Todo List" />
+      <Content>
+        <ToDoList style={{ width: '500px'}}/>
+      </Content>
     </div>
   )
 }
