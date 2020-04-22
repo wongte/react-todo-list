@@ -4,7 +4,18 @@ import { Card, Row, Col, Button } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 export default class ListItem extends Component {
-  static propTypes = {
+  constructor(props) {
+    super(props)
+  
+    this.toggleStatus = this.toggleStatus.bind(this)
+    this.state = {
+    }
+  }
+  
+  static propTypes = {}
+
+  toggleStatus() {
+    this.props.onItemToggleStatus(this.props.item.id)
   }
 
   render() {
@@ -13,11 +24,13 @@ export default class ListItem extends Component {
       <Card>
         <Row>
           <Col span={20}>
-            {item.status ? (
-              <strike>{item.content}</strike>
-            ) : (
-              <span>{item.content}</span>
-            )}
+            <div onClick={this.toggleStatus}>
+              {item.status ? (
+                <strike>{item.content}</strike>
+              ) : (
+                <span>{item.content}</span>
+              )}
+            </div>
           </Col>
           <Col span={4}>
             <Button type="primary" shape="circle" icon={<SearchOutlined />} />
