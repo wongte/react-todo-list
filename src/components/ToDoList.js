@@ -28,26 +28,27 @@ export default class ToDoList extends Component {
   }
 
   addItem(event) {
-    let listItems = this.state.listItems
-    listItems.push({
-      id: '' + (Math.floor(Math.random() * 100)),
-      content: event.target.value,
-      status: false
+    let value = event.target.value
+    ToDoApis.addItem(value).then(response => {
+      let listItems = Array.from(this.state.listItems)
+      listItems.push(response.data)
+      this.setState({ listItems })
     })
-    this.setState({ listItems })
   }
 
   toggleItemStatus(id) {
-    let listItems = this.state.listItems
+    let listItems = Array.from(this.state.listItems)
     let indexOfItem = listItems.findIndex(item => item.id === id)
-    listItems[indexOfItem].status = !listItems[indexOfItem].status
-    ToDoApis.updateItem(listItems[indexOfItem]).then(response => {
+    let item = listItems[indexOfItem]
+    item.status = !item.status
+    ToDoApis.updateItem(item).then(response => {
+      listItems[indexOfItem] = response.data
       this.setState({ listItems })
     })
   }
   
   deleteItem(id) {
-    let listItems = this.state.listItems
+    let listItems = Array.from(this.state.listItems)
     let indexOfItem = listItems.findIndex(item => item.id === id)
     ToDoApis.deleteItem(listItems[indexOfItem]).then(response => {
       listItems.splice(indexOfItem, 1)

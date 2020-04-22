@@ -5,6 +5,11 @@ class ToDoApis {
   static getAllListItem() {
     return axios.get(TODO_API_URL)
   }
+  static addItem(itemContent) {
+    return axios.post(TODO_API_URL, {
+      content: itemContent
+    })
+  }
   static updateItem(item) {
     return axios.put(TODO_API_URL + '/' + item.id, item)
   }
