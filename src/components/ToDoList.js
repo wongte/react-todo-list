@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ListItem from './ListItem'
 import { Row, Col, Input } from 'antd'
+import ToDoApis from '../apis/ToDoApis'
 
 export default class ToDoList extends Component {
   constructor(props) {
@@ -12,22 +13,18 @@ export default class ToDoList extends Component {
     this.deleteItem = this.deleteItem.bind(this)
   
     this.state = {
-      listItems: [
-        {
-          id: '1',
-          content: 'content 1',
-          status: true,
-        },
-        {
-          id: '2',
-          content: 'content 1',
-          status: false,
-        },
-      ],
+      listItems: [],
     }
   }
   
   static propTypes = {
+  }
+
+
+  componentDidMount() {
+    ToDoApis.getAllListItem().then(response => {
+      this.setState({ listItems: response.data })
+    })
   }
 
   addItem(event) {
@@ -44,14 +41,18 @@ export default class ToDoList extends Component {
     let listItems = this.state.listItems
     let indexOfItem = listItems.findIndex(item => item.id === id)
     listItems[indexOfItem].status = !listItems[indexOfItem].status
-    this.setState({ listItems })
+    ToDoApis.updateItem(listItems[indexOfItem]).then(response => {
+      this.setState({ listItems })
+    })
   }
   
   deleteItem(id) {
     let listItems = this.state.listItems
     let indexOfItem = listItems.findIndex(item => item.id === id)
-    listItems.splice(indexOfItem, 1)
-    this.setState({ listItems })
+    ToDoApis.deleteItem(listItems[indexOfItem]).then(response => {
+      listItems.splice(indexOfItem, 1)
+      this.setState({ listItems })
+    })
   }
 
   render() {
