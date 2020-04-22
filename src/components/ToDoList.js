@@ -9,6 +9,7 @@ export default class ToDoList extends Component {
 
     this.addItem = this.addItem.bind(this)
     this.toggleItemStatus = this.toggleItemStatus.bind(this)
+    this.deleteItem = this.deleteItem.bind(this)
   
     this.state = {
       listItems: [
@@ -32,6 +33,7 @@ export default class ToDoList extends Component {
   addItem(event) {
     let listItems = this.state.listItems
     listItems.push({
+      id: '' + (Math.floor(Math.random() * 100)),
       content: event.target.value,
       status: false
     })
@@ -44,6 +46,13 @@ export default class ToDoList extends Component {
     listItems[indexOfItem].status = !listItems[indexOfItem].status
     this.setState({ listItems })
   }
+  
+  deleteItem(id) {
+    let listItems = this.state.listItems
+    let indexOfItem = listItems.findIndex(item => item.id === id)
+    listItems.splice(indexOfItem, 1)
+    this.setState({ listItems })
+  }
 
   render() {
     return (
@@ -51,11 +60,18 @@ export default class ToDoList extends Component {
         {this.state.listItems.map((item, index) => (
           <Row key={index}>
             <Col span={24}>
-              <ListItem item={item} onItemToggleStatus={this.toggleItemStatus} />
+              <ListItem
+                item={item}
+                onItemToggleStatus={this.toggleItemStatus}
+                onItemDeleted={this.deleteItem}
+              />
             </Col>
           </Row>
         ))}
-        <Input placeholder="Add a new item here..." onPressEnter={this.addItem}/>
+        <Input
+          placeholder="Add a new item here..."
+          onPressEnter={this.addItem}
+        />
       </div>
     )
   }

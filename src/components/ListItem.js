@@ -8,6 +8,7 @@ export default class ListItem extends Component {
     super(props)
   
     this.toggleStatus = this.toggleStatus.bind(this)
+    this.deleteItem = this.deleteItem.bind(this)
     this.state = {
     }
   }
@@ -16,6 +17,10 @@ export default class ListItem extends Component {
 
   toggleStatus() {
     this.props.onItemToggleStatus(this.props.item.id)
+  }
+  
+  deleteItem() {
+    this.props.onItemDeleted(this.props.item.id)
   }
 
   render() {
@@ -33,7 +38,12 @@ export default class ListItem extends Component {
             </div>
           </Col>
           <Col span={4}>
-            <Button type="primary" shape="circle" icon={<SearchOutlined />} />
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<SearchOutlined />}
+              onClick={this.deleteItem}
+            />
           </Col>
         </Row>
       </Card>
