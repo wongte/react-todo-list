@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Card, Row, Col, Button } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
 
 export default class ListItem extends Component {
   static propTypes = {
-    prop: PropTypes,
   }
 
   render() {
@@ -20,7 +20,7 @@ export default class ListItem extends Component {
             )}
           </Col>
           <Col span={4}>
-            <Button>Delete</Button>
+            <Button type="primary" shape="circle" icon={<SearchOutlined />} />
           </Col>
         </Row>
       </Card>
