@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Card, Row, Col, Button } from 'antd'
-import { CheckOutlined, DeleteFilled } from '@ant-design/icons'
+import { UndoOutlined, CheckOutlined, DeleteFilled } from '@ant-design/icons'
 
 export default class ListItem extends Component {
   constructor(props) {
@@ -25,12 +25,15 @@ export default class ListItem extends Component {
 
   render() {
     let item = this.props.item
+    let completeButton = item.status ? (
+      <UndoOutlined onClick={this.toggleStatus} />
+    ) : (
+      <CheckOutlined onClick={this.toggleStatus} />
+    )
     return (
       <Card
         actions={[
-          <CheckOutlined
-            onClick={this.toggleStatus}
-          />,
+          completeButton,
           <DeleteFilled
             onClick={this.deleteItem}
           />,
