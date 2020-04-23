@@ -13,7 +13,9 @@ export default class ListItem extends Component {
     }
   }
   
-  static propTypes = {}
+  static propTypes = {
+    item: PropTypes.object
+  }
 
   toggleStatus() {
     this.props.onItemToggleStatus(this.props.item.id)
